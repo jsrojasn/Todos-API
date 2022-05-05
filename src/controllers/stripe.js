@@ -41,7 +41,7 @@ exports.billingSession = async (req, res, next) => {
     const session = await stripe.billingPortal.sessions.create(
       {
         customer: userStripeCustomerId,
-        return_url: "http://localhost:3000/article-plans",
+        return_url: "http://localhost:3000",
       },
       {
         apiKey: process.env.STRIPE_SECRET_KEY,
