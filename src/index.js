@@ -12,10 +12,7 @@ const isSubscribed = require("../src/middlewares/isSubscribed");
 dotenv.config();
 
 mongoose
-  .connect(
-    process.env.MONGO_URI,
-    { useNewUrlParser: true }
-  )
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => {
     const app = express();
     app.use(express.json());
@@ -23,8 +20,9 @@ mongoose
     app.use(express.urlencoded({ extended: false }));
     app.use("/user", userRoutes);
     app.use("/todos", [isAuthenticated, isSubscribed], todoRoutes);
-    app.use("/stripe", isAuthenticated ,stripeRoutes);
+    app.use("/stripe", isAuthenticated, stripeRoutes);
     app.listen(process.env.PORT || 4000, () => {
       console.log("Server Started");
     });
-  });
+  })
+  .catch((error) => console.log("Error", error));
